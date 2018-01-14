@@ -107,10 +107,10 @@ class Mundschenk_WP_Requirements {
 			$requirements_met = false;
 		}
 
-		//if ( ! $requirements_met && is_admin() ) {
+		if ( ! $requirements_met && is_admin() ) {
 			// Load text domain to ensure translated admin notices.
-			// load_plugin_textdomain( 'wp-typography', false, dirname( plugin_basename( $this->plugin_file ) ) . '/translations/' );
-		//}
+			load_plugin_textdomain( $this->textdomain );
+		}
 
 		return $requirements_met;
 	}

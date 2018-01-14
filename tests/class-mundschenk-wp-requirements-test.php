@@ -295,10 +295,9 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 			$multibyte_times = ! $php_version || $multibyte ? 0 : 1;
 			$charset_times   = ! $php_version || ! $multibyte || $charset ? 0 : 1;
 
-			//if ( ! $expected ) {
-				//Functions\expect( 'plugin_basename' )->once()->with( m::type( 'string' ) )->andReturn( 'basename' );
-				//Functions\expect( 'load_plugin_textdomain' )->once()->with( 'wp-typography', false, m::type( 'string' ) );
-			//}
+			if ( ! $expected ) {
+				Functions\expect( 'load_plugin_textdomain' )->once()->with( 'textdomain' );
+			}
 
 			Actions\expectAdded( 'admin_notices' )->with( [ $this->req, 'admin_notices_php_version_incompatible' ] )->times( $php_times );
 			Actions\expectAdded( 'admin_notices' )->with( [ $this->req, 'admin_notices_mbstring_incompatible' ] )->times( $multibyte_times );
