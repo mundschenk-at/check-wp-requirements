@@ -43,7 +43,7 @@
             "@test -- --coverage-html tests/coverage"
         ],
         "phpcs": [
-            "phpcs -p -s src/ tests/ --extensions=php"
+            "phpcs -p -s class-mundschenk-wp-requirements.php tests/ --extensions=php"
         ]
     }
 }
