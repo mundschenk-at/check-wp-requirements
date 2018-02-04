@@ -29,7 +29,7 @@
     "prefer-stable": true,
 
     "autoload": {
-        "classmap": ["src/"]
+        "classmap": ["class-mundschenk-wp-requirements.php"]
     },
     "autoload-dev": {
         "classmap": ["tests/"]
@@ -37,13 +37,13 @@
 
     "scripts": {
         "test": [
-            "phpunit --testsuite CheckWPRequirements"
+            "vendor/bin/phpunit --testsuite CheckWPRequirements"
         ],
         "coverage": [
             "@test -- --coverage-html tests/coverage"
         ],
         "phpcs": [
-            "phpcs -p -s class-mundschenk-wp-requirements.php tests/ --extensions=php"
+            "vendor/bin/phpcs -p -s class-mundschenk-wp-requirements.php tests/ --extensions=php"
         ]
     }
 }

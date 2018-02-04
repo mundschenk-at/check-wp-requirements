@@ -1,6 +1,6 @@
 filter:
     paths:
-        - 'src/*'
+        - 'class-mundschenk-wp-requirements.php'
         - 'tests/*'
 
 build:
@@ -22,7 +22,7 @@ build:
             version: 7.1
     tests:
         override:
-            - phpcs-run -p src/ tests/ --ignore=tests/coverage --extensions=php
+            - phpcs-run -p class-mundschenk-wp-requirements.php tests/ --ignore=tests/coverage --extensions=php
 
 tools:
     php_code_sniffer: false

@@ -13,7 +13,7 @@
 	</testsuites>
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="true">
-	    	<directory suffix=".php">includes</directory>
+	    	<file>class-mundschenk-wp-requirements.php</file>
 		</whitelist>
 	</filter>
 	<php>
