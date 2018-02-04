@@ -2,19 +2,13 @@
     "name": "mundschenk-at/check-wp-requirements",
     "description": "A class to allow WordPress plugins to check certain runtime requirements before activation.",
     "type": "library",
-    "license": "GPL 2.0+",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Peter Putzer",
             "email": "github@mundschenk.at",
             "homepage": "https://code.mundschenk.at",
             "role": "Developer"
-        },
-        {
-            "name": "Jeffrey D. King",
-            "email": "jeff.king@weathersource.com",
-            "homepage": "http://kingdesk.com",
-            "role": "Original wp-Typography author"
         }
     ],
 
