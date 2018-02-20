@@ -58,10 +58,8 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 		// Set up virtual filesystem.
 		vfsStream::setup( 'root', null, [
 			'plugin' => [
-				'admin' => [
-					'partials' => [
-						'requirements-error-notice.php' => 'REQUIREMENTS_ERROR',
-					],
+				'partials' => [
+					'requirements-error-notice.php' => 'REQUIREMENTS_ERROR',
 				],
 			],
 		] );

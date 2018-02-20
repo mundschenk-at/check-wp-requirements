@@ -196,6 +196,6 @@ class Mundschenk_WP_Requirements {
 		$format  = array_shift( $args );
 		$message = vsprintf( $format, $args );
 
-		require dirname( $this->plugin_file ) . '/admin/partials/requirements-error-notice.php';
+		require dirname( $this->plugin_file ) . '/partials/requirements-error-notice.php';
 	}
 }
