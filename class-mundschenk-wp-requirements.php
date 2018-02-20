@@ -98,25 +98,22 @@ class Mundschenk_WP_Requirements {
 		$requirements_met = true;
 
 		if ( ! empty( $this->install_requirements['php'] ) && version_compare( PHP_VERSION, $this->install_requirements['php'], '<' ) ) {
-			if ( is_admin() ) {
-				add_action( 'admin_notices', array( $this, 'admin_notices_php_version_incompatible' ) );
-			}
+			$notice           = 'admin_notices_php_version_incompatible';
 			$requirements_met = false;
 		} elseif ( ! empty( $this->install_requirements['multibyte'] ) && ! $this->check_multibyte_support() ) {
-			if ( is_admin() ) {
-				add_action( 'admin_notices', array( $this, 'admin_notices_mbstring_incompatible' ) );
-			}
+			$notice           = 'admin_notices_mbstring_incompatible';
 			$requirements_met = false;
 		} elseif ( ! empty( $this->install_requirements['utf-8'] ) && ! $this->check_utf8_support() ) {
-			if ( is_admin() ) {
-				add_action( 'admin_notices', array( $this, 'admin_notices_charset_incompatible' ) );
-			}
+			$notice           = 'admin_notices_charset_incompatible';
 			$requirements_met = false;
 		}
 
-		if ( ! $requirements_met && is_admin() ) {
+		if ( ! $requirements_met && ! empty( $notice ) && is_admin() ) {
 			// Load text domain to ensure translated admin notices.
 			load_plugin_textdomain( $this->textdomain );
+
+			// Add admin notice.
+			add_action( 'admin_notices', array( $this, $notice ) );
 		}
 
 		return $requirements_met;
