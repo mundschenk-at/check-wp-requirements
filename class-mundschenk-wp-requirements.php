@@ -63,6 +63,13 @@ class Mundschenk_WP_Requirements {
 	private $plugin_file;
 
 	/**
+	 * The textdomain used for loading plugin translations.
+	 *
+	 * @var string
+	 */
+	private $textdomain;
+
+	/**
 	 * Sets up a new Mundschenk_WP_Requirements object.
 	 *
 	 * @param string $name         The plugin name.
