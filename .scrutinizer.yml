@@ -2,13 +2,14 @@ filter:
     paths:
         - 'class-mundschenk-wp-requirements.php'
         - 'tests/*'
+    dependency_paths:
+        - wordpress/
 
 build:
     cache:
         directories:
             - ~/.composer   # Composer home directory (avoid fetching already fetched packages)
             # vendor is already included.
-
     environment:
         rabbitmq: false
         mysql: false
@@ -20,9 +21,17 @@ build:
         neo4j: false
         php:
             version: 7.1
-    tests:
-        override:
-            - phpcs-run -p class-mundschenk-wp-requirements.php tests/ --ignore=tests/coverage --extensions=php
+    nodes:
+        analysis:
+            project_setup:
+                override: true
+            dependencies:
+                before:
+                    - composer require --dev johnpbloch/wordpress
+            tests:
+                override:
+                    - php-scrutinizer-run --disable-security-analysis
+                    - phpcs-run --standard=phpcs.xml class-mundschenk-wp-requirements.php tests/ --extensions=php
 
 checks:
     php:
