@@ -24,6 +24,11 @@ build:
         override:
             - phpcs-run -p class-mundschenk-wp-requirements.php tests/ --ignore=tests/coverage --extensions=php
 
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
 tools:
     php_code_sniffer: false
     php_cs_fixer: false
