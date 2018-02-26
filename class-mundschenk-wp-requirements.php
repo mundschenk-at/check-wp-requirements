@@ -70,6 +70,13 @@ class Mundschenk_WP_Requirements {
 	private $textdomain;
 
 	/**
+	 * The base directory of the Check_WP_Requirements component (i.e. the equivalent of __DIR__).
+	 *
+	 * @var string
+	 */
+	private $base_dir;
+
+	/**
 	 * Sets up a new Mundschenk_WP_Requirements object.
 	 *
 	 * @param string $name         The plugin name.
@@ -81,6 +88,7 @@ class Mundschenk_WP_Requirements {
 		$this->plugin_name = $name;
 		$this->plugin_file = $plugin_path;
 		$this->textdomain  = $textdomain;
+		$this->base_dir    = dirname( __FILE__ );
 
 		$this->install_requirements = \wp_parse_args( $requirements, array(
 			'php'       => '5.2.0',
@@ -200,6 +208,6 @@ class Mundschenk_WP_Requirements {
 		$format  = array_shift( $args );
 		$message = vsprintf( $format, $args );
 
-		require dirname( $this->plugin_file ) . '/partials/requirements-error-notice.php';
+		require "{$this->base_dir}/partials/requirements-error-notice.php";
 	}
 }

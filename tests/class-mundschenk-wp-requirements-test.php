@@ -57,7 +57,7 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 
 		// Set up virtual filesystem.
 		vfsStream::setup( 'root', null, [
-			'plugin' => [
+			'vendor' => [
 				'partials' => [
 					'requirements-error-notice.php' => 'REQUIREMENTS_ERROR',
 				],
@@ -124,8 +124,10 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 	 * @covers ::display_error_notice
 	 */
 	public function test_display_error_notice() {
-		$this->expectOutputString( 'REQUIREMENTS_ERROR' );
+		// Mock dirname( __FILE__ ).
+		$this->setValue( $this->req, 'base_dir', 'vendor', \Mundschenk_WP_Requirements::class );
 
+		$this->expectOutputString( 'REQUIREMENTS_ERROR' );
 		$this->invokeMethod( $this->req, 'display_error_notice', [ 'foo' ] );
 	}
 
