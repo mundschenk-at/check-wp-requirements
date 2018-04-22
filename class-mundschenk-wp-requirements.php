@@ -108,7 +108,7 @@ if ( ! class_exists( 'Mundschenk_WP_Requirements' ) ) {
 		public function check() {
 			$requirements_met = true;
 
-			if ( ! empty( $this->install_requirements['php'] ) && version_compare( PHP_VERSION, $this->install_requirements['php'], '<' ) ) {
+			if ( ! empty( $this->install_requirements['php'] ) && ! $this->check_php_support() ) {
 				$notice           = 'admin_notices_php_version_incompatible';
 				$requirements_met = false;
 			} elseif ( ! empty( $this->install_requirements['multibyte'] ) && ! $this->check_multibyte_support() ) {
@@ -135,6 +135,15 @@ if ( ! class_exists( 'Mundschenk_WP_Requirements' ) ) {
 		 */
 		public function deactivate_plugin() {
 			deactivate_plugins( plugin_basename( $this->plugin_file ) );
+		}
+
+		/**
+		 * Checks if the PHP version in use is at least equal to the required version.
+		 *
+		 * @return bool
+		 */
+		protected function check_php_support() {
+			return version_compare( PHP_VERSION, $this->install_requirements['php'], '>=' );
 		}
 
 		/**
