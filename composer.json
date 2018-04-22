@@ -40,7 +40,7 @@
             "vendor/bin/phpunit --testsuite CheckWPRequirements"
         ],
         "coverage": [
-            "@test -- --coverage-html tests/coverage"
+            "@composer test -- --coverage-html tests/coverage"
         ],
         "phpcs": [
             "vendor/bin/phpcs -p -s class-mundschenk-wp-requirements.php tests/ --extensions=php"
