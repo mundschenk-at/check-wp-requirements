@@ -202,6 +202,20 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 	}
 
 	/**
+	 * Test check_php_support.
+	 *
+	 * @covers ::check_php_support
+	 */
+	public function test_check_php_support() {
+		// Fake PHP version check.
+		$this->setValue( $this->req, 'install_requirements', [ 'php' => '999.0.0' ], \Mundschenk_WP_Requirements::class );
+		$this->assertFalse( $this->invokeMethod( $this->req, 'check_php_support' ) );
+
+		$this->setValue( $this->req, 'install_requirements', [ 'php' => PHP_VERSION ], \Mundschenk_WP_Requirements::class );
+		$this->assertTrue( $this->invokeMethod( $this->req, 'check_php_support' ) );
+	}
+
+	/**
 	 * Provides data for testing check_utf8_support.
 	 *
 	 * @return array
@@ -266,6 +280,7 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 	 * Test check.
 	 *
 	 * @covers ::check
+	 * @covers ::get_requirements
 	 *
 	 * @dataProvider provide_check_data
 	 *
@@ -278,15 +293,7 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 	public function test_check( $php_version, $multibyte, $charset, $admin, $expected ) {
 		Functions\expect( 'is_admin' )->zeroOrMoreTimes()->andReturn( $admin );
 
-		// Fake PHP version check.
-		if ( ! $php_version ) {
-			$this->setValue( $this->req, 'install_requirements', [
-				'php'       => '999.0.0',
-				'multibyte' => true,
-				'utf-8'     => true,
-			], \Mundschenk_WP_Requirements::class );
-		}
-
+		$this->req->shouldReceive( 'check_php_support' )->once()->andReturn( $php_version );
 		$this->req->shouldReceive( 'check_multibyte_support' )->times( (int) $php_version )->andReturn( $multibyte );
 		$this->req->shouldReceive( 'check_utf8_support' )->times( (int) ( $php_version && $multibyte ) )->andReturn( $charset );
 
