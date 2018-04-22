@@ -108,15 +108,12 @@ if ( ! class_exists( 'Mundschenk_WP_Requirements' ) ) {
 		public function check() {
 			$requirements_met = true;
 
-			if ( ! empty( $this->install_requirements['php'] ) && ! $this->check_php_support() ) {
-				$notice           = 'admin_notices_php_version_incompatible';
-				$requirements_met = false;
-			} elseif ( ! empty( $this->install_requirements['multibyte'] ) && ! $this->check_multibyte_support() ) {
-				$notice           = 'admin_notices_mbstring_incompatible';
-				$requirements_met = false;
-			} elseif ( ! empty( $this->install_requirements['utf-8'] ) && ! $this->check_utf8_support() ) {
-				$notice           = 'admin_notices_charset_incompatible';
-				$requirements_met = false;
+			foreach ( $this->get_requirements() as $requirement ) {
+				if ( ! empty( $this->install_requirements[ $requirement['enable_key'] ] ) && ! call_user_func( $requirement['check'] ) ) {
+					$notice           = $requirement['notice'];
+					$requirements_met = false;
+					break;
+				}
 			}
 
 			if ( ! $requirements_met && ! empty( $notice ) && is_admin() ) {
@@ -124,10 +121,42 @@ if ( ! class_exists( 'Mundschenk_WP_Requirements' ) ) {
 				load_plugin_textdomain( $this->textdomain );
 
 				// Add admin notice.
-				add_action( 'admin_notices', array( $this, $notice ) );
+				add_action( 'admin_notices', $notice );
 			}
 
 			return $requirements_met;
+		}
+
+
+		/**
+		 * Retrieves an array of requirement specifications.
+		 *
+		 * @return array {
+		 *         An array of requirements checks.
+		 *
+		 *   @type string   $enable_key An index in the $install_requirements array to switch the check on and off.
+		 *   @type callable $check      A function returning true if the check was successful, false otherwise.
+		 *   @type callable $notice     A function displaying an appropriate error notice.
+		 * }
+		 */
+		protected function get_requirements() {
+			return array(
+				array(
+					'enable_key' => 'php',
+					'check'      => array( $this, 'check_php_support' ),
+					'notice'     => array( $this, 'admin_notices_php_version_incompatible' ),
+				),
+				array(
+					'enable_key' => 'multibyte',
+					'check'      => array( $this, 'check_multibyte_support' ),
+					'notice'     => array( $this, 'admin_notices_mbstring_incompatible' ),
+				),
+				array(
+					'enable_key' => 'utf-8',
+					'check'      => array( $this, 'check_utf8_support' ),
+					'notice'     => array( $this, 'admin_notices_charset_incompatible' ),
+				),
+			);
 		}
 
 		/**
