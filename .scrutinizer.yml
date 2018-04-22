@@ -2,7 +2,6 @@ filter:
     paths:
         - 'class-mundschenk-wp-requirements.php'
         - 'partials/'
-        - 'tests/'
     dependency_paths:
         - wordpress/
 
@@ -32,7 +31,7 @@ build:
             tests:
                 override:
                     - php-scrutinizer-run --disable-security-analysis
-                    - phpcs-run --standard=phpcs.xml class-mundschenk-wp-requirements.php partials/ tests/ --extensions=php
+                    - phpcs-run --standard=phpcs.xml class-mundschenk-wp-requirements.php partials/ --extensions=php
 
 checks:
     php:
