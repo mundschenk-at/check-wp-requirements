@@ -92,11 +92,11 @@ class WP_Requirements {
 		$this->textdomain  = $textdomain;
 		$this->base_dir    = dirname( __FILE__ );
 
-		$this->install_requirements = \wp_parse_args( $requirements, array(
+		$this->install_requirements = \wp_parse_args( $requirements, [
 			'php'       => '5.2.0',
 			'multibyte' => false,
 			'utf-8'     => false,
-		) );
+		] );
 	}
 
 	/**
@@ -139,23 +139,23 @@ class WP_Requirements {
 	 * }
 	 */
 	protected function get_requirements() {
-		return array(
-			array(
+		return [
+			[
 				'enable_key' => 'php',
-				'check'      => array( $this, 'check_php_support' ),
-				'notice'     => array( $this, 'admin_notices_php_version_incompatible' ),
-			),
-			array(
+				'check'      => [ $this, 'check_php_support' ],
+				'notice'     => [ $this, 'admin_notices_php_version_incompatible' ],
+			],
+			[
 				'enable_key' => 'multibyte',
-				'check'      => array( $this, 'check_multibyte_support' ),
-				'notice'     => array( $this, 'admin_notices_mbstring_incompatible' ),
-			),
-			array(
+				'check'      => [ $this, 'check_multibyte_support' ],
+				'notice'     => [ $this, 'admin_notices_mbstring_incompatible' ],
+			],
+			[
 				'enable_key' => 'utf-8',
-				'check'      => array( $this, 'check_utf8_support' ),
-				'notice'     => array( $this, 'admin_notices_charset_incompatible' ),
-			),
-		);
+				'check'      => [ $this, 'check_utf8_support' ],
+				'notice'     => [ $this, 'admin_notices_charset_incompatible' ],
+			],
+		];
 	}
 
 	/**
