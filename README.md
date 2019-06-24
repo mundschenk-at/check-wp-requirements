@@ -10,8 +10,8 @@ A helper class for WordPress plugins to check PHP version and other requirements
 
 ## Requirements
 
-*   PHP 5.2.0 or above
-*   WordPress 4.6 or higher (for proper translations).
+*   PHP 5.6.0 or above
+*   WordPress 5.2 or higher.
 
 ## Installation
 
