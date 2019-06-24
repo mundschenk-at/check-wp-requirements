@@ -90,7 +90,7 @@ class WP_Requirements {
 		$this->plugin_name = $name;
 		$this->plugin_file = $plugin_path;
 		$this->textdomain  = $textdomain;
-		$this->base_dir    = dirname( __FILE__ );
+		$this->base_dir    = \dirname( __FILE__ );
 
 		$this->install_requirements = \wp_parse_args( $requirements, [
 			'php'       => '5.2.0',
@@ -108,19 +108,19 @@ class WP_Requirements {
 		$requirements_met = true;
 
 		foreach ( $this->get_requirements() as $requirement ) {
-			if ( ! empty( $this->install_requirements[ $requirement['enable_key'] ] ) && ! call_user_func( $requirement['check'] ) ) {
+			if ( ! empty( $this->install_requirements[ $requirement['enable_key'] ] ) && ! \call_user_func( $requirement['check'] ) ) {
 				$notice           = $requirement['notice'];
 				$requirements_met = false;
 				break;
 			}
 		}
 
-		if ( ! $requirements_met && ! empty( $notice ) && is_admin() ) {
+		if ( ! $requirements_met && ! empty( $notice ) && \is_admin() ) {
 			// Load text domain to ensure translated admin notices.
-			load_plugin_textdomain( $this->textdomain );
+			\load_plugin_textdomain( $this->textdomain );
 
 			// Add admin notice.
-			add_action( 'admin_notices', $notice );
+			\add_action( 'admin_notices', $notice );
 		}
 
 		return $requirements_met;
@@ -162,7 +162,7 @@ class WP_Requirements {
 	 * Deactivates the plugin.
 	 */
 	public function deactivate_plugin() {
-		deactivate_plugins( plugin_basename( $this->plugin_file ) );
+		\deactivate_plugins( \plugin_basename( $this->plugin_file ) );
 	}
 
 	/**
@@ -171,7 +171,7 @@ class WP_Requirements {
 	 * @return bool
 	 */
 	protected function check_php_support() {
-		return version_compare( PHP_VERSION, $this->install_requirements['php'], '>=' );
+		return \version_compare( \PHP_VERSION, $this->install_requirements['php'], '>=' );
 	}
 
 	/**
@@ -180,10 +180,10 @@ class WP_Requirements {
 	 * @return bool
 	 */
 	protected function check_multibyte_support() {
-		return function_exists( 'mb_strlen' )
-			&& function_exists( 'mb_strtolower' )
-			&& function_exists( 'mb_substr' )
-			&& function_exists( 'mb_detect_encoding' );
+		return \function_exists( 'mb_strlen' )
+			&& \function_exists( 'mb_strtolower' )
+			&& \function_exists( 'mb_substr' )
+			&& \function_exists( 'mb_detect_encoding' );
 	}
 
 	/**
@@ -192,7 +192,7 @@ class WP_Requirements {
 	 * @return bool
 	 */
 	protected function check_utf8_support() {
-		return 'utf-8' === strtolower( get_bloginfo( 'charset' ) );
+		return 'utf-8' === \strtolower( \get_bloginfo( 'charset' ) );
 	}
 
 	/**
@@ -201,10 +201,10 @@ class WP_Requirements {
 	public function admin_notices_php_version_incompatible() {
 		$this->display_error_notice(
 			/* translators: 1: plugin name 2: target PHP version number 3: actual PHP version number */
-			__( 'The activated plugin %1$s requires PHP %2$s or later. Your server is running PHP %3$s. Please deactivate this plugin, or upgrade your server\'s installation of PHP.', $this->textdomain ),
+			\__( 'The activated plugin %1$s requires PHP %2$s or later. Your server is running PHP %3$s. Please deactivate this plugin, or upgrade your server\'s installation of PHP.', $this->textdomain ),
 			"<strong>{$this->plugin_name}</strong>",
 			$this->install_requirements['php'],
-			phpversion()
+			\PHP_VERSION
 		);
 	}
 
@@ -214,10 +214,10 @@ class WP_Requirements {
 	public function admin_notices_mbstring_incompatible() {
 		$this->display_error_notice(
 			/* translators: 1: plugin name 2: mbstring documentation URL */
-			__( 'The activated plugin %1$s requires the mbstring PHP extension to be enabled on your server. Please deactivate this plugin, or <a href="%2$s">enable the extension</a>.', $this->textdomain ),
+			\__( 'The activated plugin %1$s requires the mbstring PHP extension to be enabled on your server. Please deactivate this plugin, or <a href="%2$s">enable the extension</a>.', $this->textdomain ),
 			"<strong>{$this->plugin_name}</strong>",
 			/* translators: URL with mbstring PHP extension installation instructions */
-			__( 'http://www.php.net/manual/en/mbstring.installation.php', $this->textdomain )
+			\__( 'http://www.php.net/manual/en/mbstring.installation.php', $this->textdomain )
 		);
 	}
 
@@ -227,9 +227,9 @@ class WP_Requirements {
 	public function admin_notices_charset_incompatible() {
 		$this->display_error_notice(
 			/* translators: 1: plugin name 2: current character encoding 3: options URL */
-			__( 'The activated plugin %1$s requires your blog use the UTF-8 character encoding. You have set your blogs encoding to %2$s. Please deactivate this plugin, or <a href="%3$s">change your character encoding to UTF-8</a>.', $this->textdomain ),
+			\__( 'The activated plugin %1$s requires your blog use the UTF-8 character encoding. You have set your blogs encoding to %2$s. Please deactivate this plugin, or <a href="%3$s">change your character encoding to UTF-8</a>.', $this->textdomain ),
 			"<strong>{$this->plugin_name}</strong>",
-			get_bloginfo( 'charset' ),
+			\get_bloginfo( 'charset' ),
 			'/wp-admin/options-reading.php'
 		);
 	}
@@ -240,13 +240,13 @@ class WP_Requirements {
 	 * @param string $format ... An `sprintf` format string, followd by an unspecified number of optional parameters.
 	 */
 	protected function display_error_notice( $format ) {
-		if ( func_num_args() < 1 || empty( $format ) ) {
+		if ( \func_num_args() < 1 || empty( $format ) ) {
 			return; // abort.
 		}
 
-		$args    = func_get_args();
-		$format  = array_shift( $args );
-		$message = vsprintf( $format, $args );
+		$args    = \func_get_args();
+		$format  = \array_shift( $args );
+		$message = \vsprintf( $format, $args );
 
 		require "{$this->base_dir}/partials/requirements-error-notice.php";
 	}
