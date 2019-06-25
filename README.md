@@ -23,12 +23,13 @@ $ composer require mundschenk-at/check-wp-requirements
 
 ## Basic Usage
 
-1.  Create a `Mundschenk_WP_Requirements` object and set the requirements in the constructor.
-2.  Call the `Mundschenk_WP_Requirements::check()` method and start your plugin normally if it
+1.  Create a `\Mundschenk\WP_Requirements` object and set the requirements in the constructor.
+2.  Call the `\Mundschenk\WP_Requirements::check()` method and start your plugin normally if it
     returns `true`.
 
 ```PHP
-require_once dirname( __FILE__ ) . '/vendor/mundschenk-at/check-wp-requirements/class-mundschenk-wp-requirements.php';
+// Set up autoloader.
+require_once __DIR__ . '/vendor/autoload.php';
 
 /**
  * Load the plugin after checking for the necessary PHP version.
@@ -37,15 +38,14 @@ require_once dirname( __FILE__ ) . '/vendor/mundschenk-at/check-wp-requirements/
  */
 function run_your_plugin() {
 
-	$requirements = new Mundschenk_WP_Requirements( 'Your Plugin Name', __FILE__, 'your-textdomain', array(
+	$requirements = new \Mundschenk\WP_Requirements( 'Your Plugin Name', __FILE__, 'your-textdomain', [
 		'php'       => '5.6.0',
 		'multibyte' => true,
 		'utf-8'     => false,
-	) );
+	] );
 
 	if ( $requirements->check() ) {
 		// Autoload the rest of your classes.
-		require_once __DIR__ . '/vendor/autoload.php';
 
 		// Create and start the plugin.
 		...
