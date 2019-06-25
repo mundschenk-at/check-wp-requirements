@@ -1,6 +1,6 @@
 # check-wp-requirements
 
-[![Build Status](https://travis-ci.org/mundschenk-at/check-wp-requirements.svg?branch=master)](https://travis-ci.org/mundschenk-at/check-wp-requirements)
+[![Build Status](https://travis-ci.com/mundschenk-at/check-wp-requirements.svg?branch=master)](https://travis-ci.com/mundschenk-at/check-wp-requirements)
 [![Latest Stable Version](https://poser.pugx.org/mundschenk-at/check-wp-requirements/v/stable)](https://packagist.org/packages/mundschenk-at/check-wp-requirements)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/?branch=master)
