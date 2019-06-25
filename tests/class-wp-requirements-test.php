@@ -2,7 +2,7 @@
 /**
  *  This file is part of mundschenk-at/check-wp-requirements.
  *
- *  Copyright 2017-2018 Peter Putzer.
+ *  Copyright 2017-2019 Peter Putzer.
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@
  *  @license http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace Mundschenk\Check_WordPress_Requirements\Tests;
+namespace Mundschenk\WP_Requirements\Tests;
 
 use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
@@ -33,19 +33,19 @@ use org\bovigo\vfs\vfsStream;
 use Mockery as m;
 
 /**
- * Mundschenk_WP_Requirements unit test.
+ * Mundschenk\WP_Requirements unit test.
  *
- * @coversDefaultClass \Mundschenk_WP_Requirements
- * @usesDefaultClass \Mundschenk_WP_Requirements
+ * @coversDefaultClass \Mundschenk\WP_Requirements
+ * @usesDefaultClass \Mundschenk\WP_Requirements
  *
- * @uses Mundschenk_WP_Requirements::__construct
+ * @uses Mundschenk\WP_Requirements::__construct
  */
-class Mundschenk_WP_Requirements_Test extends TestCase {
+class WP_Requirements_Test extends TestCase {
 
 	/**
 	 * Test fixture.
 	 *
-	 * @var \Mundschenk_WP_Requirements
+	 * @var \Mundschenk\WP_Requirements
 	 */
 	protected $req;
 
@@ -69,7 +69,7 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 			return \array_merge( $defaults, $array );
 		} );
 
-		$this->req = m::mock( \Mundschenk_WP_Requirements::class, [
+		$this->req = m::mock( \Mundschenk\WP_Requirements::class, [
 			'Foobar',
 			'plugin/plugin.php',
 			'textdomain',
@@ -102,13 +102,13 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 			return \array_merge( $defaults, $array );
 		} );
 
-		$req = m::mock( \Mundschenk_WP_Requirements::class, [ 'Foobar', 'plugin/plugin.php', 'textdomain', [ 'php' => '5.3.5' ] ] );
+		$req = m::mock( \Mundschenk\WP_Requirements::class, [ 'Foobar', 'plugin/plugin.php', 'textdomain', [ 'php' => '5.3.5' ] ] );
 
 		$this->assertAttributeSame( 'plugin/plugin.php', 'plugin_file', $req );
 		$this->assertAttributeSame( 'Foobar', 'plugin_name', $req );
 		$this->assertAttributeSame( 'textdomain', 'textdomain', $req );
 
-		$requirements = $this->getValue( $req, 'install_requirements', \Mundschenk_WP_Requirements::class );
+		$requirements = $this->getValue( $req, 'install_requirements', \Mundschenk\WP_Requirements::class );
 		$this->assertArrayHasKey( 'php', $requirements );
 		$this->assertArrayHasKey( 'multibyte', $requirements );
 		$this->assertArrayHasKey( 'utf-8', $requirements );
@@ -125,7 +125,7 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 	 */
 	public function test_display_error_notice() {
 		// Mock dirname( __FILE__ ).
-		$this->setValue( $this->req, 'base_dir', 'vendor', \Mundschenk_WP_Requirements::class );
+		$this->setValue( $this->req, 'base_dir', 'vendor', \Mundschenk\WP_Requirements::class );
 
 		$this->expectOutputString( 'REQUIREMENTS_ERROR' );
 		$this->invokeMethod( $this->req, 'display_error_notice', [ 'foo' ] );
@@ -208,10 +208,10 @@ class Mundschenk_WP_Requirements_Test extends TestCase {
 	 */
 	public function test_check_php_support() {
 		// Fake PHP version check.
-		$this->setValue( $this->req, 'install_requirements', [ 'php' => '999.0.0' ], \Mundschenk_WP_Requirements::class );
+		$this->setValue( $this->req, 'install_requirements', [ 'php' => '999.0.0' ], \Mundschenk\WP_Requirements::class );
 		$this->assertFalse( $this->invokeMethod( $this->req, 'check_php_support' ) );
 
-		$this->setValue( $this->req, 'install_requirements', [ 'php' => PHP_VERSION ], \Mundschenk_WP_Requirements::class );
+		$this->setValue( $this->req, 'install_requirements', [ 'php' => PHP_VERSION ], \Mundschenk\WP_Requirements::class );
 		$this->assertTrue( $this->invokeMethod( $this->req, 'check_php_support' ) );
 	}
 
