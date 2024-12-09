@@ -2,7 +2,7 @@
 /**
  *  This file is part of mundschenk-at/check-wp-requirements.
  *
- *  Copyright 2017-2019 Peter Putzer.
+ *  Copyright 2017-2024 Peter Putzer.
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -29,22 +29,22 @@ use Brain\Monkey;
 /**
  * Abstract base class for our unit tests.
  */
-abstract class TestCase extends \PHPUnit\Framework\TestCase {
+abstract class TestCase extends \Yoast\PHPUnitPolyfills\TestCases\TestCase {
 
 	/**
 	 * Set up Brain Monkey.
 	 */
-	protected function setUp() {
-		parent::setUp();
+	protected function set_up() {
+		parent::set_up();
 		Monkey\setUp();
 	}
 
 	/**
 	 * Tear down Brain Monkey.
 	 */
-	protected function tearDown() {
+	protected function tear_down() {
 		Monkey\tearDown();
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
