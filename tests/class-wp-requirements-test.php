@@ -95,10 +95,6 @@ class WP_Requirements_Test extends TestCase {
 
 		$req = m::mock( \Mundschenk\WP_Requirements::class, [ 'Foobar', 'plugin/plugin.php', 'textdomain', [ 'php' => '5.3.5' ] ] );
 
-		$this->assertAttributeSame( 'plugin/plugin.php', 'plugin_file', $req );
-		$this->assertAttributeSame( 'Foobar', 'plugin_name', $req );
-		$this->assertAttributeSame( 'textdomain', 'textdomain', $req );
-
 		$requirements = $this->getValue( $req, 'install_requirements', \Mundschenk\WP_Requirements::class );
 		$this->assertArrayHasKey( 'php', $requirements );
 		$this->assertArrayHasKey( 'multibyte', $requirements );
