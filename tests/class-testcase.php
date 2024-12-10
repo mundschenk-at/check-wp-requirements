@@ -33,6 +33,8 @@ abstract class TestCase extends \Yoast\PHPUnitPolyfills\TestCases\TestCase {
 
 	/**
 	 * Set up Brain Monkey.
+	 *
+	 * @return void
 	 */
 	protected function set_up() {
 		parent::set_up();
@@ -41,6 +43,8 @@ abstract class TestCase extends \Yoast\PHPUnitPolyfills\TestCases\TestCase {
 
 	/**
 	 * Tear down Brain Monkey.
+	 *
+	 * @return void
 	 */
 	protected function tear_down() {
 		Monkey\tearDown();
@@ -89,9 +93,8 @@ abstract class TestCase extends \Yoast\PHPUnitPolyfills\TestCases\TestCase {
 	/**
 	 * Sets the value of a private/protected property of a class.
 	 *
-	 * @param string     $classname     A class whose property we will access.
-	 * @param string     $property_name Property to set.
-	 * @param mixed|null $value         The new value.
+	 *
+	 * @return void
 	 */
 	protected function setStaticValue( $classname, $property_name, $value ) {
 		$reflection = new \ReflectionClass( $classname );
@@ -103,10 +106,8 @@ abstract class TestCase extends \Yoast\PHPUnitPolyfills\TestCases\TestCase {
 	/**
 	 * Sets the value of a private/protected property of a class.
 	 *
-	 * @param object     $object        Instantiated object that we will run method on.
-	 * @param string     $property_name Property to set.
-	 * @param mixed|null $value         The new value.
-	 * @param string     $classname     Optional. The class to use for accessing private properties.
+	 *
+	 * @return void
 	 */
 	protected function setValue( $object, $property_name, $value, $classname = '' ) {
 		if ( empty( $classname ) ) {
@@ -163,6 +164,8 @@ abstract class TestCase extends \Yoast\PHPUnitPolyfills\TestCases\TestCase {
 	 * @param string $attribute The attribute name.
 	 * @param object $object    The object.
 	 * @param string $message   Optional. Default ''.
+	 *
+	 * @return void
 	 */
 	protected function assertAttributeArrayHasKey( $key, $attribute, $object, $message = '' ) {
 		$ref  = new \ReflectionClass( get_class( $object ) );
@@ -179,6 +182,8 @@ abstract class TestCase extends \Yoast\PHPUnitPolyfills\TestCases\TestCase {
 	 * @param string $attribute The attribute name.
 	 * @param object $object    The object.
 	 * @param string $message   Optional. Default ''.
+	 *
+	 * @return void
 	 */
 	protected function assertAttributeArrayNotHasKey( $key, $attribute, $object, $message = '' ) {
 		$ref  = new \ReflectionClass( get_class( $object ) );

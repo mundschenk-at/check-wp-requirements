@@ -2,7 +2,7 @@
 /**
  *  This file is part of mundschenk-at/check-wp-requirements.
  *
- *  Copyright 2014-2019 Peter Putzer.
+ *  Copyright 2014-2024 Peter Putzer.
  *  Copyright 2009-2011 KINGdesk, LLC.
  *
  *  This program is free software; you can redistribute it and/or
@@ -45,7 +45,7 @@ class WP_Requirements {
 	 *  - 'multibyte'
 	 *  - 'utf-8'
 	 *
-	 * @var array A hash containing the version requirements for the plugin.
+	 * @var array<string,mixed> A hash containing the version requirements for the plugin.
 	 */
 	private $install_requirements;
 
@@ -81,10 +81,10 @@ class WP_Requirements {
 	/**
 	 * Sets up a new Mundschenk\WP_Requirements object.
 	 *
-	 * @param string $name         The plugin name.
-	 * @param string $plugin_path  The full path to the main plugin file.
-	 * @param string $textdomain   The text domain used for i18n.
-	 * @param array  $requirements The requirements to check against.
+	 * @param string              $name         The plugin name.
+	 * @param string              $plugin_path  The full path to the main plugin file.
+	 * @param string              $textdomain   The text domain used for i18n.
+	 * @param array<string,mixed> $requirements The requirements to check against.
 	 */
 	public function __construct( $name, $plugin_path, $textdomain, $requirements ) {
 		$this->plugin_name = $name;
@@ -137,6 +137,8 @@ class WP_Requirements {
 	 *   @type callable $check      A function returning true if the check was successful, false otherwise.
 	 *   @type callable $notice     A function displaying an appropriate error notice.
 	 * }
+	 *
+	 * @phpstan-return array<int,array{enable_key:string, check:callable, notice:callable}>
 	 */
 	protected function get_requirements() {
 		return [
@@ -160,6 +162,8 @@ class WP_Requirements {
 
 	/**
 	 * Deactivates the plugin.
+	 *
+	 * @return void
 	 */
 	public function deactivate_plugin() {
 		\deactivate_plugins( \plugin_basename( $this->plugin_file ) );
@@ -197,6 +201,8 @@ class WP_Requirements {
 
 	/**
 	 * Print 'PHP version incompatible' admin notice
+	 *
+	 * @return void
 	 */
 	public function admin_notices_php_version_incompatible() {
 		$this->display_error_notice(
@@ -210,6 +216,8 @@ class WP_Requirements {
 
 	/**
 	 * Prints 'mbstring extension missing' admin notice
+	 *
+	 * @return void
 	 */
 	public function admin_notices_mbstring_incompatible() {
 		$this->display_error_notice(
@@ -223,6 +231,8 @@ class WP_Requirements {
 
 	/**
 	 * Prints 'Charset incompatible' admin notice
+	 *
+	 * @return void
 	 */
 	public function admin_notices_charset_incompatible() {
 		$this->display_error_notice(
@@ -238,6 +248,8 @@ class WP_Requirements {
 	 * Shows an error message in the admin area.
 	 *
 	 * @param string $format ... An `sprintf` format string, followd by an unspecified number of optional parameters.
+	 *
+	 * @return void
 	 */
 	protected function display_error_notice( $format ) {
 		if ( \func_num_args() < 1 || empty( $format ) ) {

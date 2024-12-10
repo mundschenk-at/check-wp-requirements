@@ -52,6 +52,8 @@ class WP_Requirements_Test extends TestCase {
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
+	 *
+	 * @return void
 	 */
 	protected function set_up() { // @codingStandardsIgnoreLine
 
@@ -87,6 +89,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test constructor.
 	 *
 	 * @covers ::__construct
+	 *
+	 * @return void
 	 */
 	public function test_constructor() {
 		Functions\expect( 'wp_parse_args' )->once()->andReturnUsing( function( $array, $defaults ) {
@@ -109,6 +113,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test display_error_notice.
 	 *
 	 * @covers ::display_error_notice
+	 *
+	 * @return void
 	 */
 	public function test_display_error_notice() {
 		// Mock dirname( __FILE__ ).
@@ -124,6 +130,8 @@ class WP_Requirements_Test extends TestCase {
 	 * @covers ::display_error_notice
 	 *
 	 * @expectedExceptionMessage Too few arguments to function
+	 *
+	 * @return void
 	 */
 	public function test_display_error_notice_no_arguments() {
 		$this->expectOutputString( '' );
@@ -144,6 +152,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test display_error_notice.
 	 *
 	 * @covers ::display_error_notice
+	 *
+	 * @return void
 	 */
 	public function test_display_error_notice_empty_format() {
 		$this->expectOutputString( '' );
@@ -155,6 +165,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test admin_notices_php_version_incompatible.
 	 *
 	 * @covers ::admin_notices_php_version_incompatible
+	 *
+	 * @return void
 	 */
 	public function test_admin_notices_php_version_incompatible() {
 		Functions\expect( '__' )->with( m::type( 'string' ), 'textdomain' )->atLeast()->once()->andReturn( 'translated' );
@@ -167,6 +179,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test admin_notices_mbstring_incompatible.
 	 *
 	 * @covers ::admin_notices_mbstring_incompatible
+	 *
+	 * @return void
 	 */
 	public function test_admin_notices_mbstring_incompatible() {
 		Functions\expect( '__' )->with( m::type( 'string' ), 'textdomain' )->atLeast()->once()->andReturn( 'translated' );
@@ -179,6 +193,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test admin_notices_charset_incompatible.
 	 *
 	 * @covers ::admin_notices_charset_incompatible
+	 *
+	 * @return void
 	 */
 	public function test_admin_notices_charset_incompatible() {
 		Functions\expect( '__' )->with( m::type( 'string' ), 'textdomain' )->atLeast()->once()->andReturn( 'translated' );
@@ -192,6 +208,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test check_php_support.
 	 *
 	 * @covers ::check_php_support
+	 *
+	 * @return void
 	 */
 	public function test_check_php_support() {
 		// Fake PHP version check.
@@ -205,7 +223,7 @@ class WP_Requirements_Test extends TestCase {
 	/**
 	 * Provides data for testing check_utf8_support.
 	 *
-	 * @return array
+	 * @return array<array{0:string,1:bool}>
 	 */
 	public function provide_check_utf8_support_data() {
 		return [
@@ -225,6 +243,8 @@ class WP_Requirements_Test extends TestCase {
 	 *
 	 * @param string $charset  The blog charset.
 	 * @param bool   $expected The expected result.
+	 *
+	 * @return void
 	 */
 	public function test_check_utf8_support( $charset, $expected ) {
 		Functions\expect( 'get_bloginfo' )->with( 'charset' )->once()->andReturn( $charset );
@@ -236,6 +256,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test check_utf8_support.
 	 *
 	 * @covers ::check_multibyte_support
+	 *
+	 * @return void
 	 */
 	public function test_check_multibyte_support() {
 		// This will be true because mbstring is a requirement for running the test suite.
@@ -245,7 +267,7 @@ class WP_Requirements_Test extends TestCase {
 	/**
 	 * Provides data for testing check.
 	 *
-	 * @return array
+	 * @return array<int, bool[]>
 	 */
 	public function provide_check_data() {
 		return [
@@ -276,6 +298,8 @@ class WP_Requirements_Test extends TestCase {
 	 * @param  bool $charset     Charset check flag.
 	 * @param  bool $admin       Result of is_admin().
 	 * @param  bool $expected    Expected result.
+	 *
+	 * @return void
 	 */
 	public function test_check( $php_version, $multibyte, $charset, $admin, $expected ) {
 		Functions\expect( 'is_admin' )->zeroOrMoreTimes()->andReturn( $admin );
@@ -305,6 +329,8 @@ class WP_Requirements_Test extends TestCase {
 	 * Test deactivate_plugin.
 	 *
 	 * @covers ::deactivate_plugin
+	 *
+	 * @return void
 	 */
 	public function test_deactivate_plugin() {
 		Functions\expect( 'plugin_basename' )->with( 'plugin/plugin.php' )->once()->andReturn( 'plugin' );
