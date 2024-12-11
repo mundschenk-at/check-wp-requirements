@@ -136,14 +136,7 @@ class WP_Requirements_Test extends TestCase {
 	public function test_display_error_notice_no_arguments() {
 		$this->expectOutputString( '' );
 
-		// PHP < 7.0 raises an error instead of throwing an "exception".
-		if ( version_compare( phpversion(), '7.0.0', '<' ) ) {
-			$this->expectException( \PHPUnit_Framework_Error::class );
-		} elseif ( version_compare( phpversion(), '7.1.0', '<' ) ) {
-			$this->expectException( \PHPUnit\Framework\Error\Warning::class );
-		} else {
-			$this->expectException( \ArgumentCountError::class );
-		}
+		$this->expectException( \ArgumentCountError::class );
 
 		$this->invokeMethod( $this->req, 'display_error_notice', [] );
 	}

@@ -35,7 +35,7 @@ namespace Mundschenk;
  *    - mb_string extension
  *    - UTF-8 encoding
  *
- * Note: All code must be executable on PHP 5.2.
+ * Note: All code must be executable on PHP 7.4.
  */
 class WP_Requirements {
 
@@ -90,10 +90,10 @@ class WP_Requirements {
 		$this->plugin_name = $name;
 		$this->plugin_file = $plugin_path;
 		$this->textdomain  = $textdomain;
-		$this->base_dir    = \dirname( __FILE__ );
+		$this->base_dir    = __DIR__;
 
 		$this->install_requirements = \wp_parse_args( $requirements, [
-			'php'       => '5.2.0',
+			'php'       => '7.4.0',
 			'multibyte' => false,
 			'utf-8'     => false,
 		] );
