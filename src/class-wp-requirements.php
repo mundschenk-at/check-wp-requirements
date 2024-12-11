@@ -2,7 +2,7 @@
 /**
  *  This file is part of mundschenk-at/check-wp-requirements.
  *
- *  Copyright 2014-2019 Peter Putzer.
+ *  Copyright 2014-2024 Peter Putzer.
  *  Copyright 2009-2011 KINGdesk, LLC.
  *
  *  This program is free software; you can redistribute it and/or
@@ -35,7 +35,7 @@ namespace Mundschenk;
  *    - mb_string extension
  *    - UTF-8 encoding
  *
- * Note: All code must be executable on PHP 5.2.
+ * Note: All code must be executable on PHP 7.4.
  */
 class WP_Requirements {
 
@@ -45,7 +45,7 @@ class WP_Requirements {
 	 *  - 'multibyte'
 	 *  - 'utf-8'
 	 *
-	 * @var array A hash containing the version requirements for the plugin.
+	 * @var array<string,mixed> A hash containing the version requirements for the plugin.
 	 */
 	private $install_requirements;
 
@@ -81,22 +81,25 @@ class WP_Requirements {
 	/**
 	 * Sets up a new Mundschenk\WP_Requirements object.
 	 *
-	 * @param string $name         The plugin name.
-	 * @param string $plugin_path  The full path to the main plugin file.
-	 * @param string $textdomain   The text domain used for i18n.
-	 * @param array  $requirements The requirements to check against.
+	 * @param string              $name         The plugin name.
+	 * @param string              $plugin_path  The full path to the main plugin file.
+	 * @param string              $textdomain   The text domain used for i18n.
+	 * @param array<string,mixed> $requirements The requirements to check against.
 	 */
 	public function __construct( $name, $plugin_path, $textdomain, $requirements ) {
 		$this->plugin_name = $name;
 		$this->plugin_file = $plugin_path;
 		$this->textdomain  = $textdomain;
-		$this->base_dir    = \dirname( __FILE__ );
+		$this->base_dir    = __DIR__;
 
-		$this->install_requirements = \wp_parse_args( $requirements, [
-			'php'       => '5.2.0',
-			'multibyte' => false,
-			'utf-8'     => false,
-		] );
+		$this->install_requirements = \wp_parse_args(
+			$requirements,
+			[
+				'php'       => '7.4.0',
+				'multibyte' => false,
+				'utf-8'     => false,
+			]
+		);
 	}
 
 	/**
@@ -117,7 +120,7 @@ class WP_Requirements {
 
 		if ( ! $requirements_met && ! empty( $notice ) && \is_admin() ) {
 			// Load text domain to ensure translated admin notices.
-			\load_plugin_textdomain( $this->textdomain );
+			\load_plugin_textdomain( $this->textdomain ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
 
 			// Add admin notice.
 			\add_action( 'admin_notices', $notice );
@@ -137,6 +140,8 @@ class WP_Requirements {
 	 *   @type callable $check      A function returning true if the check was successful, false otherwise.
 	 *   @type callable $notice     A function displaying an appropriate error notice.
 	 * }
+	 *
+	 * @phpstan-return array<int,array{enable_key:string, check:callable, notice:callable}>
 	 */
 	protected function get_requirements() {
 		return [
@@ -160,6 +165,8 @@ class WP_Requirements {
 
 	/**
 	 * Deactivates the plugin.
+	 *
+	 * @return void
 	 */
 	public function deactivate_plugin() {
 		\deactivate_plugins( \plugin_basename( $this->plugin_file ) );
@@ -197,11 +204,13 @@ class WP_Requirements {
 
 	/**
 	 * Print 'PHP version incompatible' admin notice
+	 *
+	 * @return void
 	 */
 	public function admin_notices_php_version_incompatible() {
 		$this->display_error_notice(
 			/* translators: 1: plugin name 2: target PHP version number 3: actual PHP version number */
-			\__( 'The activated plugin %1$s requires PHP %2$s or later. Your server is running PHP %3$s. Please deactivate this plugin, or upgrade your server\'s installation of PHP.', $this->textdomain ),
+			\__( 'The activated plugin %1$s requires PHP %2$s or later. Your server is running PHP %3$s. Please deactivate this plugin, or upgrade your server\'s installation of PHP.', $this->textdomain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
 			"<strong>{$this->plugin_name}</strong>",
 			$this->install_requirements['php'],
 			\PHP_VERSION
@@ -210,24 +219,28 @@ class WP_Requirements {
 
 	/**
 	 * Prints 'mbstring extension missing' admin notice
+	 *
+	 * @return void
 	 */
 	public function admin_notices_mbstring_incompatible() {
 		$this->display_error_notice(
 			/* translators: 1: plugin name 2: mbstring documentation URL */
-			\__( 'The activated plugin %1$s requires the mbstring PHP extension to be enabled on your server. Please deactivate this plugin, or <a href="%2$s">enable the extension</a>.', $this->textdomain ),
+			\__( 'The activated plugin %1$s requires the mbstring PHP extension to be enabled on your server. Please deactivate this plugin, or <a href="%2$s">enable the extension</a>.', $this->textdomain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
 			"<strong>{$this->plugin_name}</strong>",
 			/* translators: URL with mbstring PHP extension installation instructions */
-			\__( 'http://www.php.net/manual/en/mbstring.installation.php', $this->textdomain )
+			\__( 'https://www.php.net/manual/en/mbstring.installation.php', $this->textdomain ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
 		);
 	}
 
 	/**
 	 * Prints 'Charset incompatible' admin notice
+	 *
+	 * @return void
 	 */
 	public function admin_notices_charset_incompatible() {
 		$this->display_error_notice(
 			/* translators: 1: plugin name 2: current character encoding 3: options URL */
-			\__( 'The activated plugin %1$s requires your blog use the UTF-8 character encoding. You have set your blogs encoding to %2$s. Please deactivate this plugin, or <a href="%3$s">change your character encoding to UTF-8</a>.', $this->textdomain ),
+			\__( 'The activated plugin %1$s requires your blog use the UTF-8 character encoding. You have set your blogs encoding to %2$s. Please deactivate this plugin, or <a href="%3$s">change your character encoding to UTF-8</a>.', $this->textdomain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
 			"<strong>{$this->plugin_name}</strong>",
 			\get_bloginfo( 'charset' ),
 			'/wp-admin/options-reading.php'
@@ -238,13 +251,15 @@ class WP_Requirements {
 	 * Shows an error message in the admin area.
 	 *
 	 * @param string $format ... An `sprintf` format string, followd by an unspecified number of optional parameters.
+	 *
+	 * @return void
 	 */
 	protected function display_error_notice( $format ) {
 		if ( \func_num_args() < 1 || empty( $format ) ) {
 			return; // abort.
 		}
 
-		$args    = \func_get_args();
+		$args    = \func_get_args(); // phpcs:ignore PHPCompatibility.FunctionUse.ArgumentFunctionsReportCurrentValue.NeedsInspection -- $format is not changed.
 		$format  = \array_shift( $args );
 		$message = \vsprintf( $format, $args );
 
