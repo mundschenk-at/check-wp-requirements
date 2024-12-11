@@ -133,7 +133,7 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
       - name: Run PHPCS checks
-        run: vendor/bin/phpcs -q *.php includes/ --extensions=php --report=checkstyle | cs2pr
+        run: vendor/bin/phpcs -q src/ --extensions=php --report=checkstyle | cs2pr
 
   phpstan:
     name: Static Analysis
