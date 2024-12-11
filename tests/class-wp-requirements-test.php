@@ -24,6 +24,8 @@
 
 namespace Mundschenk\WP_Requirements\Tests;
 
+use Mundschenk\WP_Requirements;
+
 use Brain\Monkey\Actions;
 use Brain\Monkey\Filters;
 use Brain\Monkey\Functions;
@@ -45,7 +47,7 @@ class WP_Requirements_Test extends TestCase {
 	/**
 	 * Test fixture.
 	 *
-	 * @var \Mundschenk\WP_Requirements
+	 * @var WP_Requirements&m\MockInterface
 	 */
 	protected $req;
 
@@ -71,7 +73,7 @@ class WP_Requirements_Test extends TestCase {
 			return \array_merge( $defaults, $array );
 		} );
 
-		$this->req = m::mock( \Mundschenk\WP_Requirements::class, [
+		$this->req = m::mock( WP_Requirements::class, [
 			'Foobar',
 			'plugin/plugin.php',
 			'textdomain',
