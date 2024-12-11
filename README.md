@@ -1,9 +1,8 @@
 # check-wp-requirements
 
-[![Build Status](https://travis-ci.com/mundschenk-at/check-wp-requirements.svg?branch=master)](https://travis-ci.com/mundschenk-at/check-wp-requirements)
+![Build Status](https://github.com/mundschenk-at/check-wp-requirements/actions/workflows/ci.yml/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/mundschenk-at/check-wp-requirements/v/stable)](https://packagist.org/packages/mundschenk-at/check-wp-requirements)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mundschenk-at/check-wp-requirements/?branch=master)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mundschenk-at_check-wp-requirements&metric=coverage)](https://sonarcloud.io/dashboard?id=mundschenk-at_check-wp-requirements)
 [![License](https://poser.pugx.org/mundschenk-at/check-wp-requirements/license)](https://packagist.org/packages/mundschenk-at/check-wp-requirements)
 
 A helper class for WordPress plugins to check PHP version and other requirements.
