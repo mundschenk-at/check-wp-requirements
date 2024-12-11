@@ -92,11 +92,14 @@ class WP_Requirements {
 		$this->textdomain  = $textdomain;
 		$this->base_dir    = __DIR__;
 
-		$this->install_requirements = \wp_parse_args( $requirements, [
-			'php'       => '7.4.0',
-			'multibyte' => false,
-			'utf-8'     => false,
-		] );
+		$this->install_requirements = \wp_parse_args(
+			$requirements,
+			[
+				'php'       => '7.4.0',
+				'multibyte' => false,
+				'utf-8'     => false,
+			]
+		);
 	}
 
 	/**
