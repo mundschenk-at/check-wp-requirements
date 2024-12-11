@@ -9,7 +9,7 @@ A helper class for WordPress plugins to check PHP version and other requirements
 
 ## Requirements
 
-*   PHP 5.6.0 or above
+*   PHP 7.4.0 or above
 *   WordPress 5.2 or higher.
 
 ## Installation
@@ -38,7 +38,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 function run_your_plugin() {
 
 	$requirements = new \Mundschenk\WP_Requirements( 'Your Plugin Name', __FILE__, 'your-textdomain', [
-		'php'       => '5.6.0',
+		'php'       => '8.1.0',
 		'multibyte' => true,
 		'utf-8'     => false,
 	] );
