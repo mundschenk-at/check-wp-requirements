@@ -60,29 +60,38 @@ class WP_Requirements_Test extends TestCase {
 	protected function set_up() { // @codingStandardsIgnoreLine
 
 		// Set up virtual filesystem.
-		vfsStream::setup( 'root', null, [
-			'vendor' => [
-				'partials' => [
-					'requirements-error-notice.php' => 'REQUIREMENTS_ERROR',
+		vfsStream::setup(
+			'root',
+			null,
+			[
+				'vendor' => [
+					'partials' => [
+						'requirements-error-notice.php' => 'REQUIREMENTS_ERROR',
+					],
 				],
-			],
-		] );
+			]
+		);
 		set_include_path( 'vfs://root/' ); // @codingStandardsIgnoreLine
 
-		Functions\expect( 'wp_parse_args' )->once()->andReturnUsing( function( $array, $defaults ) {
-			return \array_merge( $defaults, $array );
-		} );
+		Functions\expect( 'wp_parse_args' )->once()->andReturnUsing(
+			function ( $args, $defaults ) {
+				return \array_merge( $defaults, $args );
+			}
+		);
 
-		$this->req = m::mock( WP_Requirements::class, [
-			'Foobar',
-			'plugin/plugin.php',
-			'textdomain',
+		$this->req = m::mock(
+			WP_Requirements::class,
 			[
-				'php'       => '5.6.0',
-				'multibyte' => true,
-				'utf-8'     => true,
-			],
-		] )->shouldAllowMockingProtectedMethods()->makePartial();
+				'Foobar',
+				'plugin/plugin.php',
+				'textdomain',
+				[
+					'php'       => '5.6.0',
+					'multibyte' => true,
+					'utf-8'     => true,
+				],
+			]
+		)->shouldAllowMockingProtectedMethods()->makePartial();
 
 		parent::set_up();
 	}
@@ -95,9 +104,11 @@ class WP_Requirements_Test extends TestCase {
 	 * @return void
 	 */
 	public function test_constructor() {
-		Functions\expect( 'wp_parse_args' )->once()->andReturnUsing( function( $array, $defaults ) {
-			return \array_merge( $defaults, $array );
-		} );
+		Functions\expect( 'wp_parse_args' )->once()->andReturnUsing(
+			function ( $args, $defaults ) {
+				return \array_merge( $defaults, $args );
+			}
+		);
 
 		$req = m::mock( \Mundschenk\WP_Requirements::class, [ 'Foobar', 'plugin/plugin.php', 'textdomain', [ 'php' => '5.3.5' ] ] );
 
