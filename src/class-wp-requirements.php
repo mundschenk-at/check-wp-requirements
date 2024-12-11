@@ -228,7 +228,7 @@ class WP_Requirements {
 			\__( 'The activated plugin %1$s requires the mbstring PHP extension to be enabled on your server. Please deactivate this plugin, or <a href="%2$s">enable the extension</a>.', $this->textdomain ), // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
 			"<strong>{$this->plugin_name}</strong>",
 			/* translators: URL with mbstring PHP extension installation instructions */
-			\__( 'http://www.php.net/manual/en/mbstring.installation.php', $this->textdomain ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
+			\__( 'https://www.php.net/manual/en/mbstring.installation.php', $this->textdomain ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain -- this is a library.
 		);
 	}
 
