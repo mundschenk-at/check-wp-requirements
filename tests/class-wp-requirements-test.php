@@ -178,7 +178,7 @@ class WP_Requirements_Test extends TestCase {
 		Functions\expect( '__' )->with( m::type( 'string' ), 'textdomain' )->atLeast()->once()->andReturn( 'translated' );
 		$this->req->shouldReceive( 'display_error_notice' )->once();
 
-		$this->assertNull( $this->req->admin_notices_php_version_incompatible() );
+		$this->assertNull( $this->req->admin_notices_php_version_incompatible() ); // @phpstan-ignore method.void
 	}
 
 	/**
@@ -192,7 +192,7 @@ class WP_Requirements_Test extends TestCase {
 		Functions\expect( '__' )->with( m::type( 'string' ), 'textdomain' )->atLeast()->once()->andReturn( 'translated' );
 		$this->req->shouldReceive( 'display_error_notice' )->once();
 
-		$this->assertNull( $this->req->admin_notices_mbstring_incompatible() );
+		$this->assertNull( $this->req->admin_notices_mbstring_incompatible() ); // @phpstan-ignore method.void
 	}
 
 	/**
@@ -207,7 +207,7 @@ class WP_Requirements_Test extends TestCase {
 		Functions\expect( 'get_bloginfo' )->with( 'charset' )->once()->andReturn( '8859-1' );
 		$this->req->shouldReceive( 'display_error_notice' )->once();
 
-		$this->assertNull( $this->req->admin_notices_charset_incompatible() );
+		$this->assertNull( $this->req->admin_notices_charset_incompatible() ); // @phpstan-ignore method.void
 	}
 
 	/**
@@ -342,6 +342,6 @@ class WP_Requirements_Test extends TestCase {
 		Functions\expect( 'plugin_basename' )->with( 'plugin/plugin.php' )->once()->andReturn( 'plugin' );
 		Functions\expect( 'deactivate_plugins' )->with( 'plugin' )->once();
 
-		$this->assertNull( $this->req->deactivate_plugin() );
+		$this->assertNull( $this->req->deactivate_plugin() ); // @phpstan-ignore method.void
 	}
 }
