@@ -45,10 +45,10 @@
 
     "scripts": {
         "test": [
-            "vendor/bin/phpunit --testsuite CheckWPRequirements"
+            "phpunit --testsuite CheckWPRequirements"
         ],
         "coverage": [
-            "@composer test -- --coverage-html tests/coverage"
+            "XDEBUG_MODE=coverage phpunit --testsuite CheckWPRequirements --coverage-html tests/coverage"
         ],
         "phpcs": [
             "vendor/bin/phpcs -p -s src/ tests/ --extensions=php"
