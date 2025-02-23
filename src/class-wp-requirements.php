@@ -2,7 +2,7 @@
 /**
  *  This file is part of mundschenk-at/check-wp-requirements.
  *
- *  Copyright 2014-2024 Peter Putzer.
+ *  Copyright 2014-2025 Peter Putzer.
  *  Copyright 2009-2011 KINGdesk, LLC.
  *
  *  This program is free software; you can redistribute it and/or
@@ -90,7 +90,7 @@ class WP_Requirements {
 		$this->plugin_name = $name;
 		$this->plugin_file = $plugin_path;
 		$this->textdomain  = $textdomain;
-		$this->base_dir    = __DIR__;
+		$this->base_dir    = \dirname( __DIR__ );
 
 		$this->install_requirements = \wp_parse_args(
 			$requirements,
